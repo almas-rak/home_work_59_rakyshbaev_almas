@@ -13,13 +13,14 @@
                         <a href="{% url 'task_delete' task.pk %}"><img src="{% static 'icon/remove.png' %}"
                             style="width:25px; height:20px; margin: 10px;"></a>
                     </div>
-                    <p class="card-text">Status: {{ task.status }}</p>
-                    <p class="card-text">Type: {{task.type}}</p>
+                    <p class="card-text">Статус: {% for status in task.status.all %}{{ status.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                    <p class="card-text">Тип: {% for type in task.type.all %}{{ type.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                    <p class="card-text">Проект: {% for project in task.project.all %}{{ project.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                     {% if not delete %}
                         <p class="card-text">Description: <br> {{ task.description }}</p>
                     {%endif%}
-                    <p class="card-text"><small class="text-muted">Created: {{task.created_at}}</small></p>
-                    <p class="card-text"><small class="text-muted">Updated: {{task.updated_at}}</small></p>
+                    <p class="card-text"><small class="text-muted">Дата создания: {{task.created_at}}</small></p>
+                    <p class="card-text"><small class="text-muted">Дата обновления: {{task.updated_at}}</small></p>
                     {% if delete %}
                     {% include 'partial/confirm_delete.html' %}
                     {%endif%}

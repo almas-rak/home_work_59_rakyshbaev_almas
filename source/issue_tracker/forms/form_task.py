@@ -7,12 +7,13 @@ from issue_tracker.models import Task
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ('summary', 'description', 'status', 'type')
+        fields = ('summary', 'description', 'status', 'type', 'project')
         labels = {
             'summary': 'Краткое описание',
             'description': 'Полное описание',
             'status': 'Статус',
-            'type': 'Тип'
+            'type': 'Тип',
+            'project': 'Проект',
         }
 
     def clean_summary(self):

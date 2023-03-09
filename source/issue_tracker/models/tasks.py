@@ -13,18 +13,21 @@ class Task(models.Model):
         verbose_name='Полное описание'
     )
 
-    status = models.ForeignKey(
+    status = models.ManyToManyField(
         to='issue_tracker.Status',
-        on_delete=models.RESTRICT,
-        related_name='statuses',
+        related_name='tasks',
         verbose_name='Статус'
     )
 
-    type = models.ForeignKey(
+    type = models.ManyToManyField(
         to='issue_tracker.Type',
-        on_delete=models.RESTRICT,
-        related_name='type',
+        related_name='tasks',
         verbose_name='Тип'
+    )
+
+    project = models.ManyToManyField(
+        to='issue_tracker.project',
+        related_name='tasks',
     )
 
     is_deleted = models.BooleanField(
@@ -47,9 +50,6 @@ class Task(models.Model):
         null=True,
         default=None
     )
-
-    class Meta:
-        ordering = ['-id']
 
     def delete(self, using=None, keep_parents=False):
         self.is_deleted = True

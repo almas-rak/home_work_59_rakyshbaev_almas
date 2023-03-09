@@ -21,6 +21,9 @@
             <div class="text">Тип</div>
         </th>
         <th scope="col">
+            <div class="text">Проект</div>
+        </th>
+        <th scope="col">
             <div class="text">Время и дата создания</div>
         </th>
         <th scope="col">
@@ -35,10 +38,12 @@
             <td class="field-summary">
                 <a href="{% url 'task_detail' task.pk %}">{{task.summary}}</a>
             </td>
-            <td class="field-status nowrap">{{task.status}}</td>
-            <td class="field-type nowrap">{{task.type}}</td>
+            <td class="field-status nowrap">{% for status in task.status.all %}{{ status.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+            <td class="field-type nowrap">{% for type in task.type.all %}{{ type.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+            <td class="field-project nowrap">{% for project in task.project.all %}{{ project.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
             <td class="field-created_at nowrap">{{task.created_at}}</td>
             <td class="field-updated_at nowrap">{{task.updated_at}}</td>
+
         </tr>
     {% endfor %}
     </tbody>
