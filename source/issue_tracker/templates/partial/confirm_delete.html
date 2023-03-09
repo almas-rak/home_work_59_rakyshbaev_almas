@@ -1,0 +1,8 @@
+
+<h1>Вы точно хотите удалить задачу?</h1>
+<form action="{% url 'task_delete' task.pk %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">DELETE</button>
+    <a  class="btn btn-primary" href="{% url 'index' %}" role="button">CANCEL</a>
+</form>
+
