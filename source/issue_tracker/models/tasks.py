@@ -25,8 +25,9 @@ class Task(models.Model):
         verbose_name='Тип'
     )
 
-    project = models.ManyToManyField(
+    project = models.ForeignKey(
         to='issue_tracker.project',
+        on_delete=models.CASCADE,
         related_name='tasks',
     )
 

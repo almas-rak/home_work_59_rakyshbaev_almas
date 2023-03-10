@@ -41,7 +41,7 @@
             </td>
             <td class="field-status nowrap">{% for status in task.status.all %}{{ status.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
             <td class="field-type nowrap">{% for type in task.type.all %}{{ type.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
-            <td class="field-project nowrap">{% for project in task.project.all %}{{ project.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+            <td class="field-project nowrap">{{task.project}}</td>
             <td class="field-created_at nowrap">{{task.created_at}}</td>
             <td class="field-updated_at nowrap">{{task.updated_at}}</td>
         </tr>
