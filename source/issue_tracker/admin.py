@@ -42,8 +42,8 @@ admin.site.register(Type, TypeAdmin)
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-    list_editable = ['name']
+    list_display = ('id', 'name', 'created_at', 'completed_at', 'is_deleted', 'deleted_at')
+    list_editable = ['name', 'created_at', 'completed_at', 'is_deleted', ]
 
 
 admin.site.register(Project, ProjectAdmin)

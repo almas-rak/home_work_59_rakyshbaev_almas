@@ -3,12 +3,27 @@
 
 {% block content %}   
     <h1>Вы точно хотите удалить проект?</h1>
-    <p>Title: {{ article.title }}</p>
-    <p>Author: {{ article.author }}</p>
+<div class="container"></div>
+    <div class="card detail-card-custum mb-3 col-10">
+        <div class="row g-0">
+                <div class="card-body">
+                    <div class="">
+                        <h3 class="card-title">{{project.name}}</h3>
 
-    <form action="{% url 'project_delete' project.pk %}" method="POST">
-        {% csrf_token %}
-        <p><input type="submit" value="Удалить"></p>
-        <p><a href="{% url 'index_projects' %}">Отмена</a></p>
-    </form>
+                    </div>
+
+                    <p class="card-text"><small class="text-muted">Дата создания: {{project.created_at}}</small></p>
+                    <p class="card-text"><small class="text-muted">Дата обновления: {{project.completed_at}}</small></p>
+                    <form action="{% url 'project_delete' project.pk %}" method="POST">
+                        {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">DELETE</button>
+                    <a  class="btn btn-primary" href="{% url 'project_detail' project.pk %}" role="button">CANCEL</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock content %}
