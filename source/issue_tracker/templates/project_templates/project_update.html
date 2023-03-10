@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Project Update
+{% endblock title %}
+
+{% block content %}
+
+<h1>Update Task</h1>
+<div class="form">
+    <form action="{% url 'project_update' project.pk %}" method="POST">
+    {% include 'partial/form_task.html' %}
+    </form>
+</div>
+
+{% endblock content %}

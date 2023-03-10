@@ -1,14 +1,11 @@
-from django.db.models import Q
-from django.utils.http import urlencode
-from django.views.generic import ListView
-
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from issue_tracker.forms.project_form import ProjectForm
 from issue_tracker.models import Project
-
-from issue_tracker.forms.search_forms import SearchForm
 
 
 class ProjectsView(ListView):
-    template_name = 'projects.html'
+    template_name = 'project_templates/index_projects.html'
 
     model = Project
     context_object_name = 'projects'
@@ -16,29 +13,35 @@ class ProjectsView(ListView):
     paginate_by = 10
     paginate_orphans = 1
 
-    def get(self, request, *args, **kwargs):
-        self.form = self.get_search_form()
-        self.search_value = self.search_value()
-        return super().get(request, *args, **kwargs)
-
-    def get_search_form(self):
-        return SearchForm(self.request.GET)
-
-    def search_value(self):
-        if self.form.is_valid():
-            return self.form.cleaned_data['search']
-        return None
-
     def get_queryset(self):
         queryset = super().get_queryset().exclude(is_deleted=True)
-        if self.search_value:
-            query = Q(name__icontains=self.search_value)
-            queryset = queryset.filter(query)
         return queryset
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=object_list, **kwargs)
-        context['form'] = self.form
-        if self.search_value:
-            context['query'] = urlencode({'search': self.search_value})
-        return context
+
+class ProjectCreateView(CreateView):
+    template_name = 'project_create.html'
+    model = Project
+    form_class = ProjectForm
+
+    def get_success_url(self):
+        return reverse('project_detail', kwargs={'pk': self.object.pk})
+
+
+class ProjectDetail(DetailView):
+    template_name = 'project_templates/project_detail.html'
+    model = Project
+
+
+class ProjectUpdateView(UpdateView):
+    template_name = 'project_templates/project_update.html'
+    form_class = ProjectForm
+    model = Project
+
+    def get_success_url(self):
+        return reverse('project_detail', kwargs={'pk': self.object.pk})
+
+
+class DeleteProjectView(DeleteView):
+    template_name = 'project_templates/confirm_delete.html'
+    model = Project
+    success_url = reverse_lazy('index_projects')
